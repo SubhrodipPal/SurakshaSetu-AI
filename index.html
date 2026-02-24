@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SurakshaSetu-AI | Intent-Governed Self-Healing IoT Mesh Network</title>
+  <meta name="description" content="An Intent-Governed Autonomous Network Control Brain for Mission-Critical IoT Mesh Infrastructure. Demonstrates secure autonomy, runtime policy enforcement, deterministic AI constraints, and self-healing distributed networks." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="header">
+    <div class="header__brand">
+      <div class="header__logo">SS</div>
+      <div>
+        <div class="header__title">SurakshaSetu-AI</div>
+        <div class="header__subtitle">Intent-Governed Self-Healing IoT Mesh Network</div>
+      </div>
+    </div>
+    <div class="header__status">
+      <div class="status-dot" id="statusDot"></div>
+      <span class="status-label" id="statusLabel">SYSTEM ONLINE</span>
+    </div>
+  </header>
+
+  <!-- ═══ ARCHITECTURE FLOW INDICATOR ═══ -->
+  <div class="dashboard" style="padding-bottom:0; gap:8px;">
+    <div class="arch-flow">
+      <span class="arch-flow__layer arch-flow__layer--mesh">🔌 IoT Mesh</span>
+      <span class="arch-flow__arrow">→</span>
+      <span class="arch-flow__layer arch-flow__layer--gateway">📡 Gateway</span>
+      <span class="arch-flow__arrow">→</span>
+      <span class="arch-flow__layer arch-flow__layer--openclaw">🧠 OpenClaw</span>
+      <span class="arch-flow__arrow">→</span>
+      <span class="arch-flow__layer arch-flow__layer--armorclaw">🛡️ ArmorClaw</span>
+      <span class="arch-flow__arrow">→</span>
+      <span class="arch-flow__layer arch-flow__layer--executor">⚡ Executor</span>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN DASHBOARD ═══ -->
+  <div class="dashboard">
+
+    <!-- Mesh Visualization -->
+    <div class="card mesh-card">
+      <div class="card__header">
+        <span class="card__title"><span class="card__title-icon">🌐</span> Mesh Topology</span>
+        <span class="card__badge badge--active">LIVE</span>
+      </div>
+      <div class="mesh-canvas-wrap">
+        <canvas id="meshCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- Demo Controls + Policy -->
+    <div class="card demo-card">
+      <div class="card__header">
+        <span class="card__title"><span class="card__title-icon">🎮</span> Demo Scenarios</span>
+        <span class="card__badge badge--active">READY</span>
+      </div>
+      <div class="card__body">
+        <div class="demo-controls">
+          <button class="demo-btn demo-btn--heal" id="btnDemo1">
+            <span class="demo-btn__icon">💚</span>
+            <div class="demo-btn__content">
+              <div class="demo-btn__title">Demo 1 — Self-Healing Recovery</div>
+              <div class="demo-btn__desc">Node B degrades → AI detects → reroutes → mesh recovers</div>
+            </div>
+          </button>
+          <button class="demo-btn demo-btn--unauth" id="btnDemo2">
+            <span class="demo-btn__icon">🚫</span>
+            <div class="demo-btn__content">
+              <div class="demo-btn__title">Demo 2 — Unauthorized Command</div>
+              <div class="demo-btn__desc">Attempt shutdown_all_nodes() → ArmorClaw blocks</div>
+            </div>
+          </button>
+          <button class="demo-btn demo-btn--tamper" id="btnDemo3">
+            <span class="demo-btn__icon">🔓</span>
+            <div class="demo-btn__content">
+              <div class="demo-btn__title">Demo 3 — Token Tampering</div>
+              <div class="demo-btn__desc">Modify plan after signing → integrity check fails</div>
+            </div>
+          </button>
+          <button class="demo-btn demo-btn--reset" id="btnReset">
+            <span class="demo-btn__icon">🔄</span>
+            <div class="demo-btn__content">
+              <div class="demo-btn__title">Reset System</div>
+              <div class="demo-btn__desc">Restore all nodes to healthy, clear logs</div>
+            </div>
+          </button>
+        </div>
+        <div id="policyDisplay" class="policy-display" style="margin-top:14px;"></div>
+      </div>
+    </div>
+
+    <!-- Telemetry Panel -->
+    <div class="card telemetry-card">
+      <div class="card__header">
+        <span class="card__title"><span class="card__title-icon">📊</span> Node Telemetry</span>
+        <span class="card__badge badge--active">STREAMING</span>
+      </div>
+      <div class="card__body">
+        <div id="telemetryGrid" class="telemetry-grid"></div>
+      </div>
+    </div>
+
+    <!-- Reasoning Chain -->
+    <div class="card reasoning-card">
+      <div class="card__header">
+        <span class="card__title"><span class="card__title-icon">🧠</span> OpenClaw Reasoning Chain</span>
+        <span class="card__badge badge--active">LAYER 3</span>
+      </div>
+      <div class="card__body" style="max-height:450px;">
+        <div id="reasoningChain">
+          <div class="empty-state">
+            <div class="empty-state__icon">🧠</div>
+            Reasoning chains will appear here when anomalies are detected
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enforcement Log -->
+    <div class="card enforcement-card">
+      <div class="card__header">
+        <span class="card__title"><span class="card__title-icon">🛡️</span> ArmorClaw Enforcement Log</span>
+        <span class="card__badge badge--active" id="enforcementBadge">MONITORING</span>
+      </div>
+      <div class="card__body" style="max-height:450px;">
+        <div id="enforcementLog">
+          <div class="empty-state">
+            <div class="empty-state__icon">🛡️</div>
+            ArmorClaw enforcement decisions will appear here
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ TOAST CONTAINER ═══ -->
+  <div id="toastContainer" class="event-toast-container"></div>
+
+  <!-- ═══ ENTRY POINT ═══ -->
+  <script type="module" src="/src/main.js"></script>
+
+</body>
+</html>

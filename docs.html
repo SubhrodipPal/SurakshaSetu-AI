@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>SurakshaSetu-AI — Technical Documentation</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg: #0a0e1a;
+            --bg2: #111827;
+            --bg3: #1e293b;
+            --bg-card: rgba(17, 24, 39, .75);
+            --border: rgba(99, 102, 241, .15);
+            --border-active: rgba(99, 102, 241, .35);
+            --text: #f1f5f9;
+            --text2: #94a3b8;
+            --text3: #64748b;
+            --indigo: #6366f1;
+            --cyan: #22d3ee;
+            --emerald: #10b981;
+            --amber: #f59e0b;
+            --red: #ef4444;
+            --rose: #f43f5e;
+            --violet: #8b5cf6;
+            --font: 'Inter', system-ui, sans-serif;
+            --mono: 'JetBrains Mono', monospace;
+            --radius: 12px;
+        }
+
+        html {
+            font-size: 15px;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--indigo) var(--bg2)
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            display: flex;
+            min-height: 100vh
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, .07) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, .05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg2)
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--indigo);
+            border-radius: 3px
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg2);
+            border-right: 1px solid var(--border);
+            padding: 24px 0;
+            overflow-y: auto;
+            z-index: 100;
+            display: flex;
+            flex-direction: column
+        }
+
+        .sidebar__brand {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .sidebar__logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px
+        }
+
+        .sidebar__logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--indigo), var(--violet), var(--cyan));
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #fff;
+            font-size: 14px;
+            box-shadow: 0 0 20px rgba(99, 102, 241, .3)
+        }
+
+        .sidebar__logo-text {
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--indigo), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .sidebar__tagline {
+            font-size: .65rem;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .6px
+        }
+
+        .sidebar__nav {
+            flex: 1;
+            padding: 16px 0
+        }
+
+        .sidebar__section {
+            font-size: .6rem;
+            font-weight: 700;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            padding: 12px 20px 6px
+        }
+
+        .sidebar__link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 20px;
+            font-size: .8rem;
+            color: var(--text2);
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all .2s
+        }
+
+        .sidebar__link:hover,
+        .sidebar__link.active {
+            color: var(--text);
+            background: rgba(99, 102, 241, .06);
+            border-left-color: var(--indigo)
+        }
+
+        .sidebar__link-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+            width: 22px;
+            text-align: center
+        }
+
+        .sidebar__footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            font-size: .6rem;
+            color: var(--text3);
+            text-align: center;
+            letter-spacing: .3px
+        }
+
+        /* Main */
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 40px 50px 80px
+        }
+
+        .main h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--indigo), var(--violet), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -.5px
+        }
+
+        .main .subtitle {
+            font-size: .95rem;
+            color: var(--text2);
+            margin-bottom: 32px;
+            line-height: 1.6
+        }
+
+        .main h2 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin: 48px 0 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            scroll-margin-top: 24px
+        }
+
+        .main h2 .icon {
+            font-size: 1.3rem
+        }
+
+        .main h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 28px 0 10px;
+            color: var(--text)
+        }
+
+        .main h4 {
+            font-size: .9rem;
+            font-weight: 600;
+            margin: 20px 0 8px;
+            color: var(--text2)
+        }
+
+        .main p {
+            margin-bottom: 14px;
+            color: var(--text2);
+            font-size: .9rem
+        }
+
+        .main strong {
+            color: var(--text);
+            font-weight: 600
+        }
+
+        .main ul,
+        .main ol {
+            margin: 8px 0 16px 20px;
+            color: var(--text2);
+            font-size: .88rem
+        }
+
+        .main li {
+            margin-bottom: 4px
+        }
+
+        /* Code blocks */
+        pre {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin: 12px 0 20px;
+            overflow-x: auto;
+            font-family: var(--mono);
+            font-size: .78rem;
+            line-height: 1.7;
+            color: var(--cyan)
+        }
+
+        code {
+            font-family: var(--mono);
+            font-size: .82rem;
+            background: rgba(99, 102, 241, .1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--indigo)
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0 24px;
+            font-size: .82rem
+        }
+
+        th {
+            background: rgba(99, 102, 241, .08);
+            color: var(--text);
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border-active)
+        }
+
+        td {
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text2)
+        }
+
+        tr:hover td {
+            background: rgba(99, 102, 241, .03)
+        }
+
+        /* Alert boxes */
+        .alert {
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            margin: 16px 0 20px;
+            font-size: .82rem;
+            border-left: 4px solid
+        }
+
+        .alert-info {
+            background: rgba(34, 211, 238, .06);
+            border-color: var(--cyan);
+            color: var(--cyan)
+        }
+
+        .alert-warn {
+            background: rgba(245, 158, 11, .06);
+            border-color: var(--amber);
+            color: var(--amber)
+        }
+
+        .alert-danger {
+            background: rgba(239, 68, 68, .06);
+            border-color: var(--red);
+            color: var(--red)
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, .06);
+            border-color: var(--emerald);
+            color: var(--emerald)
+        }
+
+        .alert strong {
+            color: inherit
+        }
+
+        /* Flow diagrams (styled divs) */
+        .flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding: 18px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin: 14px 0 22px
+        }
+
+        .flow__box {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: .75rem;
+            font-weight: 600;
+            font-family: var(--mono);
+            white-space: nowrap;
+            border: 1px solid
+        }
+
+        .flow__arrow {
+            color: var(--text3);
+            font-size: 1.1rem
+        }
+
+        .flow__box.mesh {
+            background: rgba(34, 211, 238, .1);
+            color: var(--cyan);
+            border-color: rgba(34, 211, 238, .25)
+        }
+
+        .flow__box.gw {
+            background: rgba(139, 92, 246, .1);
+            color: var(--violet);
+            border-color: rgba(139, 92, 246, .25)
+        }
+
+        .flow__box.oc {
+            background: rgba(99, 102, 241, .1);
+            color: var(--indigo);
+            border-color: rgba(99, 102, 241, .25)
+        }
+
+        .flow__box.ac {
+            background: rgba(244, 63, 94, .1);
+            color: var(--rose);
+            border-color: rgba(244, 63, 94, .25)
+        }
+
+        .flow__box.ex {
+            background: rgba(16, 185, 129, .1);
+            color: var(--emerald);
+            border-color: rgba(16, 185, 129, .25)
+        }
+
+        /* Check steps */
+        .check {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin: 6px 0;
+            font-size: .82rem;
+            background: rgba(15, 23, 42, .5);
+            border: 1px solid var(--border)
+        }
+
+        .check.pass {
+            border-left: 3px solid var(--emerald)
+        }
+
+        .check.fail {
+            border-left: 3px solid var(--red);
+            background: rgba(239, 68, 68, .04)
+        }
+
+        .check__icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 1px
+        }
+
+        .check__text {
+            color: var(--text2)
+        }
+
+        .check__text strong {
+            color: var(--text)
+        }
+
+        /* Verdict box */
+        .verdict {
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            margin: 16px 0 20px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: .3px
+        }
+
+        .verdict.approved {
+            background: rgba(16, 185, 129, .1);
+            border: 2px solid rgba(16, 185, 129, .3);
+            color: var(--emerald)
+        }
+
+        .verdict.denied {
+            background: rgba(239, 68, 68, .1);
+            border: 2px solid rgba(239, 68, 68, .3);
+            color: var(--red)
+        }
+
+        /* Capability matrix */
+        .cap-matrix td:nth-child(n+2) {
+            text-align: center;
+            font-size: 1rem
+        }
+
+        /* Separator */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 36px 0
+        }
+
+        /* Summary card */
+        .summary-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin: 20px 0
+        }
+
+        .summary-card h4 {
+            margin-top: 0;
+            color: var(--text);
+            font-size: .9rem
+        }
+
+        /* Responsive */
+        @media(max-width:900px) {
+            .sidebar {
+                display: none
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 24px 20px 60px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <aside class="sidebar">
+        <div class="sidebar__brand">
+            <div class="sidebar__logo">
+                <div class="sidebar__logo-icon">SS</div>
+                <span class="sidebar__logo-text">SurakshaSetu-AI</span>
+            </div>
+            <div class="sidebar__tagline">Technical Documentation v1.0</div>
+        </div>
+        <nav class="sidebar__nav">
+            <div class="sidebar__section">Core Architecture</div>
+            <a href="#intent-model" class="sidebar__link"><span class="sidebar__link-icon">🎯</span> Intent Model</a>
+            <a href="#policy-model" class="sidebar__link"><span class="sidebar__link-icon">📜</span> Policy Model</a>
+            <a href="#enforcement" class="sidebar__link"><span class="sidebar__link-icon">🛡️</span> Enforcement
+                Mechanism</a>
+            <div class="sidebar__section">Action Analysis</div>
+            <a href="#allowed-action" class="sidebar__link"><span class="sidebar__link-icon">✅</span> Allowed Action</a>
+            <a href="#blocked-action" class="sidebar__link"><span class="sidebar__link-icon">🛑</span> Blocked
+                Action</a>
+            <div class="sidebar__section">Architecture</div>
+            <a href="#separation" class="sidebar__link"><span class="sidebar__link-icon">🔒</span> Reasoning vs
+                Execution</a>
+            <a href="#summary" class="sidebar__link"><span class="sidebar__link-icon">📊</span> Summary</a>
+        </nav>
+        <div class="sidebar__footer">Built with OpenClaw + ArmorClaw<br />© 2026 SurakshaSetu-AI</div>
+    </aside>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main class="main">
+
+        <h1>SurakshaSetu-AI</h1>
+        <p class="subtitle"><strong>Intent-Governed Self-Healing IoT Mesh Network</strong> — Built using OpenClaw +
+            ArmorClaw Architecture. This document covers the intent model, policy design, enforcement mechanism, and the
+            strict separation between reasoning and execution.</p>
+
+        <div class="flow">
+            <span class="flow__box mesh">🔌 IoT Mesh</span><span class="flow__arrow">→</span>
+            <span class="flow__box gw">📡 Gateway</span><span class="flow__arrow">→</span>
+            <span class="flow__box oc">🧠 OpenClaw</span><span class="flow__arrow">→</span>
+            <span class="flow__box ac">🛡️ ArmorClaw</span><span class="flow__arrow">→</span>
+            <span class="flow__box ex">⚡ Executor</span>
+        </div>
+
+        <!-- ═══ SECTION 1: INTENT MODEL ═══ -->
+        <h2 id="intent-model"><span class="icon">🎯</span> 1. Intent Model</h2>
+
+        <h3>What is Intent in SurakshaSetu-AI?</h3>
+        <p>Intent represents the <strong>structured, verifiable purpose</strong> behind every action the AI system wants
+            to perform. No action can occur without a formally declared intent — and that intent must survive
+            cryptographic verification before any tool is executed.</p>
+        <p>Every intent produced by OpenClaw is:</p>
+        <ul>
+            <li><strong>Deliberate</strong> — the result of multi-step AI reasoning, not ad-hoc commands</li>
+            <li><strong>Traceable</strong> — carries a full reasoning chain explaining <em>why</em> the action is needed
+            </li>
+            <li><strong>Immutable</strong> — once signed, any modification invalidates it</li>
+            <li><strong>Verifiable</strong> — ArmorClaw independently verifies the intent was created legitimately</li>
+        </ul>
+
+        <h3>Intent Structure</h3>
+        <p>Every intent package has three components:</p>
+        <pre><code>┌──────────────────────────────────────────────────┐
+│               INTENT PACKAGE                     │
+├──────────────────────────────────────────────────┤
+│                                                  │
+│  1. Reasoning Chain (WHY)                        │
+│     ├── Step 1: Anomaly Detection                │
+│     ├── Step 2: Failure Prediction               │
+│     ├── Step 3: Route Optimization               │
+│     └── Step 4: Plan Synthesis                   │
+│                                                  │
+│  2. Execution Plan (WHAT)                        │
+│     ├── toolCalls: [{tool, params, reason}]      │
+│     └── hash: "a3f8b21c" (integrity hash)        │
+│                                                  │
+│  3. Intent Token (PROOF)                         │
+│     ├── token: "setu-a3f8b21c-m2k9x"            │
+│     ├── planHash: "a3f8b21c"                     │
+│     ├── issuedAt: 1740412345678                  │
+│     └── issuer: "OpenClaw-ReasoningAgent"        │
+│                                                  │
+└──────────────────────────────────────────────────┘</code></pre>
+
+        <h3>Intent Token Generation</h3>
+        <p>The intent token is generated using an <strong>HMAC-like hash</strong> that binds the plan contents to a
+            shared secret:</p>
+        <ol>
+            <li>Serialize the plan's tool calls (tool names + parameters only)</li>
+            <li>Concatenate with shared secret key</li>
+            <li>Compute a deterministic hash of the combined string</li>
+            <li>Produce token: <code>setu-{hash}-{timestamp}</code></li>
+            <li>Store hash inside the plan object for later integrity check</li>
+        </ol>
+        <div class="alert alert-info"><strong>Critical Property:</strong> If anyone modifies the plan's tool calls after
+            the token is generated, the hash will no longer match — and ArmorClaw will detect the tampering.</div>
+
+        <h3>Intent Lifecycle</h3>
+        <pre><code>OpenClaw Reasoning        ArmorClaw Validation        Executor
+──────────────────        ────────────────────        ────────
+Telemetry analyzed             │                         │
+Anomalies detected             │                         │
+Failures predicted             │                         │
+Routes optimized               │                         │
+Plan generated ─────────► Receive intent package         │
+Token signed                   │                         │
+                          Validate token                  │
+                          Verify hash integrity           │
+                          Check policy compliance         │
+                               │                         │
+                          ┌────┴────┐                     │
+                          │APPROVED?│                     │
+                          └────┬────┘                     │
+                         Yes ──┤── No                     │
+                               │    └── BLOCK + LOG       │
+                               │                         │
+                          Pass approved ─────────► Execute tools
+                          tool calls               on Gateway</code></pre>
+
+        <hr />
+
+        <!-- ═══ SECTION 2: POLICY MODEL ═══ -->
+        <h2 id="policy-model"><span class="icon">📜</span> 2. Policy Model</h2>
+
+        <h3>Design Philosophy</h3>
+        <p>The policy model is <strong>deterministic and static</strong>. There is no runtime policy relaxation, no
+            dynamic rule adjustment, and no exception mechanism. The policy is hardcoded at deployment time and applies
+            equally to every intent.</p>
+        <div class="alert alert-warn"><strong>Design Decision:</strong> Dynamic policy modification is itself a security
+            vulnerability. If an attacker compromises the reasoning layer, they cannot instruct the policy layer to
+            relax its rules.</div>
+
+        <h3>Policy Definition</h3>
+        <pre><code>{
+  "allow": [
+    "get_network_status",    // Read mesh state
+    "isolate_node",          // Remove failing node from mesh
+    "update_routing",        // Recalculate data paths
+    "notify_admin",          // Send alert to human operator
+    "reset_node"             // Restart a single node
+  ],
+  "deny": [
+    "shutdown_all_nodes",    // Catastrophic action
+    "reset_entire_network",  // Mass disruption
+    "erase_logs",            // Destroys audit trail
+    "format_storage",        // Data destruction
+    "disable_auth",          // Security removal
+    "modify_firmware"        // Unauthorized changes
+  ],
+  "maxToolCallsPerPlan": 10,
+  "requireIntentToken": true,
+  "requirePlanIntegrity": true
+}</code></pre>
+
+        <h3>Evaluation Rules</h3>
+        <table>
+            <tr>
+                <th>Rule</th>
+                <th>Priority</th>
+                <th>Behavior</th>
+            </tr>
+            <tr>
+                <td>Tool in <code>deny</code> list</td>
+                <td><strong>Highest</strong></td>
+                <td>Immediately blocked, violation logged</td>
+            </tr>
+            <tr>
+                <td>Tool NOT in <code>allow</code> list</td>
+                <td><strong>High</strong></td>
+                <td>Blocked (fail-closed), treated as unknown</td>
+            </tr>
+            <tr>
+                <td>Tool IS in <code>allow</code> list</td>
+                <td>Normal</td>
+                <td>Permitted to proceed</td>
+            </tr>
+            <tr>
+                <td>Plan exceeds max tool calls</td>
+                <td><strong>High</strong></td>
+                <td>Entire plan blocked</td>
+            </tr>
+            <tr>
+                <td>No intent token present</td>
+                <td><strong>Highest</strong></td>
+                <td>Entire plan blocked</td>
+            </tr>
+            <tr>
+                <td>Plan integrity hash mismatch</td>
+                <td><strong>Highest</strong></td>
+                <td>Entire plan blocked, tampering logged</td>
+            </tr>
+        </table>
+
+        <h3>Why These Specific Tools?</h3>
+        <h4>✅ Allowed — Targeted, Reversible Operations</h4>
+        <table>
+            <tr>
+                <th>Tool</th>
+                <th>Scope</th>
+                <th>Reversibility</th>
+                <th>Why Allowed</th>
+            </tr>
+            <tr>
+                <td><code>get_network_status</code></td>
+                <td>Read-only</td>
+                <td>N/A</td>
+                <td>No side effects, pure observation</td>
+            </tr>
+            <tr>
+                <td><code>isolate_node</code></td>
+                <td>Single node</td>
+                <td>Reversible</td>
+                <td>Contains failure without destroying</td>
+            </tr>
+            <tr>
+                <td><code>update_routing</code></td>
+                <td>Routing table</td>
+                <td>Auto-rebuilds</td>
+                <td>Adapts paths without node changes</td>
+            </tr>
+            <tr>
+                <td><code>notify_admin</code></td>
+                <td>Notification</td>
+                <td>N/A</td>
+                <td>Keeps human in the loop</td>
+            </tr>
+            <tr>
+                <td><code>reset_node</code></td>
+                <td>Single node</td>
+                <td>N/A</td>
+                <td>Restores one node to health</td>
+            </tr>
+        </table>
+
+        <h4>🛑 Denied — Mass-Effect, Irreversible Operations</h4>
+        <table>
+            <tr>
+                <th>Tool</th>
+                <th>Scope</th>
+                <th>Why Denied</th>
+            </tr>
+            <tr>
+                <td><code>shutdown_all_nodes</code></td>
+                <td>Entire network</td>
+                <td>Catastrophic — total service loss</td>
+            </tr>
+            <tr>
+                <td><code>reset_entire_network</code></td>
+                <td>Entire network</td>
+                <td>Mass disruption, data loss</td>
+            </tr>
+            <tr>
+                <td><code>erase_logs</code></td>
+                <td>Audit trail</td>
+                <td>Destroys forensic evidence</td>
+            </tr>
+            <tr>
+                <td><code>format_storage</code></td>
+                <td>Storage layer</td>
+                <td>Permanent data destruction</td>
+            </tr>
+            <tr>
+                <td><code>disable_auth</code></td>
+                <td>Security layer</td>
+                <td>Removes all access control</td>
+            </tr>
+            <tr>
+                <td><code>modify_firmware</code></td>
+                <td>Firmware</td>
+                <td>Unauthorized code changes</td>
+            </tr>
+        </table>
+
+        <hr />
+
+        <!-- ═══ SECTION 3: ENFORCEMENT MECHANISM ═══ -->
+        <h2 id="enforcement"><span class="icon">🛡️</span> 3. Enforcement Mechanism</h2>
+
+        <h3>5-Check Validation Pipeline</h3>
+        <p>ArmorClaw implements a <strong>strictly ordered 5-check validation pipeline</strong>. Every check must pass
+            for the plan to be approved. Any single failure causes the <strong>entire plan</strong> to be denied — this
+            is the <strong>fail-closed</strong> principle.</p>
+
+        <div class="check pass"><span class="check__icon">1️⃣</span><span class="check__text"><strong>Intent Token
+                    Presence</strong> — Does the plan carry a cryptographic token? If no token is present, the entire
+                plan is immediately denied.</span></div>
+        <div class="check pass"><span class="check__icon">2️⃣</span><span class="check__text"><strong>Token Issuer
+                    Validation</strong> — Was the token issued by <code>OpenClaw-ReasoningAgent</code>? Rejects tokens
+                from unknown or spoofed issuers.</span></div>
+        <div class="check pass"><span class="check__icon">3️⃣</span><span class="check__text"><strong>Plan Integrity
+                    (Hash)</strong> — Re-computes the HMAC hash from plan contents and compares with the signed hash.
+                Detects any post-signing modification (tampering).</span></div>
+        <div class="check pass"><span class="check__icon">4️⃣</span><span class="check__text"><strong>Per-Tool Policy
+                    Compliance</strong> — Each tool call is checked against the deny list first (deny wins), then the
+                allow list. Unknown tools are blocked (fail-closed).</span></div>
+        <div class="check pass"><span class="check__icon">5️⃣</span><span class="check__text"><strong>Tool Call
+                    Limit</strong> — Ensures the plan does not exceed the maximum of 10 tool calls per plan, preventing
+                flood attacks.</span></div>
+
+        <h3>Hash Integrity Deep Dive</h3>
+        <p>ArmorClaw <strong>independently recomputes</strong> the plan hash and compares it with the stored hash:</p>
+        <pre><code>1. Extract tool names + parameters → serialize to JSON
+2. Concatenate with shared secret key
+3. Compute deterministic hash using bitwise operations
+4. Compare computed hash with plan.hash
+5. If mismatch → PLAN_TAMPERED violation → DENY entire plan</code></pre>
+        <div class="alert alert-danger"><strong>Defense in Depth:</strong> Even if an attacker could forge the hash
+            (requiring the secret key), the policy check would still independently block denied tools. Both security
+            layers must be defeated simultaneously.</div>
+
+        <h3>Decision Audit Record</h3>
+        <p>Every enforcement decision (approved or denied) produces a complete, append-only audit record containing:
+            decision ID, timestamp, plan ID, all check results, final verdict, approved tool calls (or empty), and
+            violation details.</p>
+
+        <hr />
+
+        <!-- ═══ SECTION 4: ALLOWED ACTION ═══ -->
+        <h2 id="allowed-action"><span class="icon">✅</span> 4. Explanation of Allowed Action</h2>
+
+        <h3>Scenario: Node B Degrades → Self-Healing Response</h3>
+
+        <h4>Step 1 — Telemetry Degrades</h4>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Healthy</th>
+                <th>Degraded</th>
+                <th>Threshold</th>
+            </tr>
+            <tr>
+                <td>Voltage</td>
+                <td>3.3V</td>
+                <td style="color:#ef4444">2.3V</td>
+                <td>&lt; 2.8V warning</td>
+            </tr>
+            <tr>
+                <td>Packet Loss</td>
+                <td>2%</td>
+                <td style="color:#ef4444">42%</td>
+                <td>&gt; 15% warning</td>
+            </tr>
+            <tr>
+                <td>RSSI</td>
+                <td>−45 dBm</td>
+                <td style="color:#f59e0b">−82 dBm</td>
+                <td>&lt; −70 dBm warning</td>
+            </tr>
+            <tr>
+                <td>Link Stability</td>
+                <td>96%</td>
+                <td style="color:#ef4444">38%</td>
+                <td>&lt; 40% critical</td>
+            </tr>
+        </table>
+
+        <h4>Step 2 — OpenClaw Anomaly Detection</h4>
+        <p>The AnomalyDetector runs threshold checks with rolling window trend analysis. Node B triggers:
+            <code>VOLTAGE_CRITICAL</code>, <code>PACKET_LOSS_CRITICAL</code>, <code>LINK_STABILITY_CRITICAL</code>,
+            <code>VOLTAGE_DECLINING_FAST</code>. Combined <strong>risk score: 0.95 (CRITICAL)</strong>.
+        </p>
+
+        <h4>Step 3 — OpenClaw Failure Prediction</h4>
+        <p>The FailurePredictor runs logistic regression on extracted features (voltage variance, packet drop trend,
+            link instability, risk score). Result: <strong>failure probability = 78%</strong>, exceeds 65% threshold →
+            <code>shouldAct = TRUE</code>.
+        </p>
+
+        <h4>Step 4 — OpenClaw Route Optimization</h4>
+        <p>The RouteOptimizer (Modified AODV) finds alternative paths excluding Node B. Path scoring uses signal
+            strength, stability, hop count, and latency. Best route to F: <strong>A → C → E → F</strong> (score: 0.807).
+        </p>
+
+        <h4>Step 5 — Plan Generated &amp; Signed</h4>
+        <pre><code>Plan:
+  1. isolate_node({ nodeId: "B" })       ← in allow list ✓
+  2. update_routing({ nodeId: "B" })     ← in allow list ✓
+  3. notify_admin({ message: "..." })    ← in allow list ✓
+
+Intent Token: "setu-a3f8b21c-m2k9x"
+Hash: "a3f8b21c"</code></pre>
+
+        <h4>Step 6 — ArmorClaw Validates</h4>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Intent Token
+                    Presence</strong> — Token: setu-a3f8b21c-m2k9x</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Token
+                    Issuer</strong> — Verified: OpenClaw-ReasoningAgent</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Plan
+                    Integrity</strong> — Hash verified: a3f8b21c matches</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Policy</strong> —
+                isolate_node, update_routing, notify_admin all in allow list</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Tool Call
+                    Limit</strong> — 3 tool calls within limit of 10</span></div>
+        <div class="verdict approved">✅ APPROVED — 3 tool calls forwarded to Executor</div>
+
+        <h4>Step 7 — Execution</h4>
+        <p>Executor sends approved calls to Gateway: Node B is isolated from the mesh, routing tables are rebuilt, and
+            an admin notification is dispatched. <strong>The mesh self-heals automatically.</strong></p>
+
+        <div class="alert alert-success"><strong>Why this was allowed:</strong> Every tool call is in the allow list,
+            the intent token is valid, the plan hash is intact, and the actions are targeted (single node) and
+            reversible. The 4-step reasoning chain provides a complete audit trail.</div>
+
+        <hr />
+
+        <!-- ═══ SECTION 5: BLOCKED ACTION ═══ -->
+        <h2 id="blocked-action"><span class="icon">🛑</span> 5. Explanation of Blocked Action</h2>
+
+        <h3>Scenario A: Unauthorized Command — <code>shutdown_all_nodes()</code></h3>
+        <p>An external request attempts to shut down the entire IoT network — a catastrophic action that ArmorClaw must
+            block.</p>
+
+        <h4>The Unauthorized Plan</h4>
+        <pre><code>Plan:
+  1. shutdown_all_nodes({})    ← IN DENY LIST!
+
+Intent Token: "setu-f7e2a91b-n3p8r"  (valid format, valid signature)
+Hash: "f7e2a91b"                      (hash is correct)</code></pre>
+        <div class="alert alert-warn"><strong>Note:</strong> The plan has a valid token and valid hash — the
+            <em>format</em> is correct. But the <em>content</em> violates policy.
+        </div>
+
+        <h4>ArmorClaw Validation</h4>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Intent Token
+                    Presence</strong> — Token present</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Token
+                    Issuer</strong> — Issuer matches</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Plan
+                    Integrity</strong> — Hash matches (plan was not tampered)</span></div>
+        <div class="check fail"><span class="check__icon">❌</span><span class="check__text"><strong>Policy:
+                    shutdown_all_nodes</strong> — DENIED — Tool is in the deny list</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Tool Call
+                    Limit</strong> — 1 ≤ 10</span></div>
+        <div class="verdict denied">🛑 DENIED — Violation: DENIED_TOOL — "shutdown_all_nodes" is explicitly denied by
+            policy</div>
+
+        <p><strong>Result:</strong> No tool calls executed. Gateway never receives any command. Network remains 100%
+            operational and unaffected. Violation logged in enforcement audit trail.</p>
+
+        <hr style="border-style:dashed;margin:28px 0" />
+
+        <h3>Scenario B: Token Tampering — Modified Plan After Signing</h3>
+        <p>An attacker intercepts a legitimate plan and injects <code>erase_logs</code> after the intent token was
+            already generated.</p>
+
+        <h4>The Tampered Plan</h4>
+        <pre><code>Original plan (signed with hash "b4c9d3e1"):
+  1. isolate_node({ nodeId: "B" })
+  2. notify_admin({ message: "..." })
+
+↓↓↓ INJECTED AFTER SIGNING ↓↓↓
+  3. erase_logs({})                    ← TAMPERED!</code></pre>
+
+        <h4>ArmorClaw Validation</h4>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Intent Token
+                    Presence</strong> — Token present</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Token
+                    Issuer</strong> — Issuer matches</span></div>
+        <div class="check fail"><span class="check__icon">❌</span><span class="check__text"><strong>Plan
+                    Integrity</strong> — Hash mismatch! Expected: b4c9d3e1, Computed: 7a1f5c82 — <strong>PLAN
+                    TAMPERED</strong></span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Policy:
+                    isolate_node</strong> — ALLOWED</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Policy:
+                    notify_admin</strong> — ALLOWED</span></div>
+        <div class="check fail"><span class="check__icon">❌</span><span class="check__text"><strong>Policy:
+                    erase_logs</strong> — DENIED — Tool is in the deny list</span></div>
+        <div class="check pass"><span class="check__icon">✅</span><span class="check__text"><strong>Tool Call
+                    Limit</strong> — 3 ≤ 10</span></div>
+        <div class="verdict denied">🛑 DENIED — 2 Violations: PLAN_TAMPERED + DENIED_TOOL</div>
+
+        <div class="alert alert-danger"><strong>Defense in Depth:</strong> Two independent security layers caught this
+            attack. The integrity check detected modification (hash mismatch). The policy check independently caught
+            <code>erase_logs</code> as denied. Both layers must be defeated simultaneously — and neither can be
+            bypassed.
+        </div>
+
+        <hr />
+
+        <!-- ═══ SECTION 6: SEPARATION ═══ -->
+        <h2 id="separation"><span class="icon">🔒</span> 6. Separation Between Reasoning and Execution</h2>
+
+        <h3>The Cardinal Rule</h3>
+        <div class="summary-card">
+            <h4 style="text-align:center;font-size:1rem;margin-bottom:10px">Fundamental Security Principle</h4>
+            <p style="text-align:center;font-size:.95rem;color:var(--text);margin:0">The reasoning layer (OpenClaw) can
+                <strong style="color:var(--indigo)">THINK</strong> but cannot <strong>ACT</strong>.<br />
+                The execution layer (Executor) can <strong style="color:var(--emerald)">ACT</strong> but cannot
+                <strong>THINK</strong>.<br />
+                ArmorClaw sits between them, ensuring every thought is <strong
+                    style="color:var(--rose)">VALIDATED</strong> before becoming an action.
+            </p>
+        </div>
+
+        <h3>How Separation is Enforced in Code</h3>
+        <p><strong>OpenClawAgent.js</strong> — imports ONLY reasoning modules (AnomalyDetector, FailurePredictor,
+            RouteOptimizer). It has <strong>zero access</strong> to Gateway or Executor. It cannot call any tool.</p>
+        <p><strong>Executor.js</strong> — imports ONLY the Gateway reference. It has <strong>zero access</strong> to
+            OpenClaw. It cannot generate plans or reason about telemetry.</p>
+        <p><strong>SystemOrchestrator.js</strong> — the ONLY place where layers connect, enforcing the strict sequential
+            pipeline: <code>OpenClaw.reason()</code> → <code>ArmorClaw.validate()</code> →
+            <code>Executor.execute()</code>. There is no path from reasoning to execution that skips ArmorClaw.
+        </p>
+
+        <h3>Capability Matrix</h3>
+        <table class="cap-matrix">
+            <tr>
+                <th>Capability</th>
+                <th>OpenClaw<br />(Reasoning)</th>
+                <th>ArmorClaw<br />(Enforcement)</th>
+                <th>Executor<br />(Execution)</th>
+            </tr>
+            <tr>
+                <td>Read telemetry data</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Run anomaly detection</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Predict failures</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Optimize routes</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Generate execution plans</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Sign intent tokens</td>
+                <td>✅</td>
+                <td>❌</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Validate intent tokens</td>
+                <td>❌</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Check policy compliance</td>
+                <td>❌</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Verify plan integrity</td>
+                <td>❌</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Approve/deny plans</td>
+                <td>❌</td>
+                <td>✅</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>Call Gateway tools</td>
+                <td>❌</td>
+                <td>❌</td>
+                <td>✅</td>
+            </tr>
+            <tr>
+                <td>Modify mesh topology</td>
+                <td>❌</td>
+                <td>❌</td>
+                <td>✅</td>
+            </tr>
+        </table>
+
+        <h3>Why This Matters</h3>
+        <ol>
+            <li><strong>Compromised AI cannot act:</strong> If the reasoning model is manipulated, it can only produce
+                plans — it cannot execute them. Plans still must pass ArmorClaw's deterministic checks.</li>
+            <li><strong>Compromised executor cannot think:</strong> If the execution layer is compromised, it cannot
+                generate its own actions. It can only run what ArmorClaw explicitly approves.</li>
+            <li><strong>ArmorClaw is deterministic:</strong> The enforcement layer uses no AI, no probabilistic
+                reasoning, and no learned behavior. It evaluates static rules against structured data. It cannot be
+                confused or tricked through prompt injection.</li>
+            <li><strong>No hidden execution paths:</strong> The SystemOrchestrator enforces a strictly sequential
+                pipeline with no alternative paths, callbacks, or event handlers that bypass ArmorClaw.</li>
+            <li><strong>Observable and auditable:</strong> Every plan, decision, and execution is logged and rendered in
+                the dashboard UI. Nothing happens silently.</li>
+        </ol>
+
+        <hr />
+
+        <!-- ═══ SUMMARY ═══ -->
+        <h2 id="summary"><span class="icon">📊</span> Summary</h2>
+
+        <table>
+            <tr>
+                <th>Aspect</th>
+                <th>Implementation</th>
+            </tr>
+            <tr>
+                <td><strong>Intent Model</strong></td>
+                <td>HMAC-signed structured plans with reasoning chains and cryptographic integrity tokens</td>
+            </tr>
+            <tr>
+                <td><strong>Policy Model</strong></td>
+                <td>Static allow/deny lists — deterministic, no runtime relaxation, deny-first evaluation</td>
+            </tr>
+            <tr>
+                <td><strong>Enforcement</strong></td>
+                <td>5-check pipeline (token → issuer → integrity → policy → limits) with fail-closed design</td>
+            </tr>
+            <tr>
+                <td><strong>Allowed Action</strong></td>
+                <td>Full reasoning chain → all tools in allow list → ArmorClaw approves → Executor acts</td>
+            </tr>
+            <tr>
+                <td><strong>Blocked Action</strong></td>
+                <td>Denied tools blocked by policy; tampered plans caught by hash mismatch; both logged</td>
+            </tr>
+            <tr>
+                <td><strong>Reasoning ↔ Execution</strong></td>
+                <td>Zero shared dependencies; OpenClaw has no Gateway access; Executor has no reasoning; ArmorClaw
+                    bridges deterministically</td>
+            </tr>
+        </table>
+
+        <div class="summary-card" style="margin-top:32px;text-align:center">
+            <p style="font-size:.85rem;color:var(--text3);margin:0"><em>SurakshaSetu-AI — An Intent-Governed Autonomous
+                    Network Control Brain for Mission-Critical IoT Mesh Infrastructure</em></p>
+        </div>
+
+    </main>
+
+    <!-- Sidebar active link highlight -->
+    <script>
+        const links = document.querySelectorAll('.sidebar__link');
+        const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { links.forEach(l => l.classList.remove('active')); const id = e.target.id; const link = document.querySelector(`.sidebar__link[href="#${id}"]`); if (link) link.classList.add('active') } }) }, { rootMargin: '-20% 0px -70% 0px' });
+        document.querySelectorAll('h2[id]').forEach(h => observer.observe(h));
+    </script>
+
+</body>
+
+</html>
